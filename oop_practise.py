@@ -1,16 +1,18 @@
 class character:
     def __init__(self, name, health):
         self.name = name
-        self.health = health
+        self.__health = health
             
     def take_damage(self, amount):
-        self.health -= amount
+        self.__health -= amount
         
-        if self.health <= 0:
-            self.health = 0
+        if self.__health <= 0:
+            self.__health = 0
             print(f" {self.name} has been defeated!")
         else:
-            print(f" {self.name} took {amount} damage! remaining health: {self.health}")  
+            print(f" {self.name} took {amount} damage! remaining health: {self.__health}")
+    def get_health(self):
+        return self.__health          
             
 class player(character):
     def attack(self, target):
@@ -19,7 +21,7 @@ class player(character):
             
 
 class enemy(character):
-    def counter_attack(self, target):
+    def attack(self, target):
         print(f"{self.name} breathes fire on {target.name}!")
         target.take_damage(15)
         
@@ -28,5 +30,6 @@ bad_dragon = enemy("red dragon", 60)
 print("---fight start!---")
 hero.attack(bad_dragon)
 print("-" * 20)
-bad_dragon.counter_attack(hero)
+bad_dragon.attack(hero)
+print(f"Alex's real health is: {hero.get_health()}")
            
